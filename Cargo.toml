@@ -1,0 +1,12 @@
+[package]
+name = "todo_api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.5.0-rc.2", features = ["json"] }
+tokio = { version = "1.26.0", features = ["full"]}
+chrono = { version = "0.4", features = ["serde"]}
+serde = { version = "1.0", features = ["derive"]}
+surrealdb = "1.0.0-beta.8"
+thiserror = "1.0"
