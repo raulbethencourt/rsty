@@ -1,7 +1,7 @@
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
     #[error("Value not of type '{0}")]
-    XvalueNotOfType(&'static str),
+    XValueNotOfType(&'static str),
 
     #[error(transparent)]
     Surreal(#[from] surrealdb::Error),

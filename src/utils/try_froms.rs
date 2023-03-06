@@ -2,12 +2,12 @@ use surrealdb::sql::{Array, Object, Value};
 
 use crate::prelude::{Error, W};
 
-impl TryFrop<W<Value>> for Object {
+impl TryFrom<W<Value>> for Object {
     type Error = Error;
     fn try_from(val: W<Value>) -> Result<Object, Error> {
         match val.0 {
             Value::Object(obj) => Ok(obj),
-            _ => Err(Error::XVallueNotOfType("Object")),
+            _ => Err(Error::XValueNotOfType("Object")),
         }
     }
 }
@@ -17,7 +17,7 @@ impl TryFrom<W<Value>> for Array {
     fn try_from(val: W<Value>) -> Result<Array, Error> {
         match val.0 {
             Value::Array(obj) => Ok(obj),
-            _ => Err(Error::XVallueNotOfType("Array")),
+            _ => Err(Error::XValueNotOfType("Array")),
         }
     }
 }
@@ -27,7 +27,7 @@ impl TryFrom<W<Value>> for i64 {
     fn try_from(val: W<Value>) -> Result<i64, Error> {
         match val.0 {
             Value::Number(obj) => Ok(obj),
-            _ => Err(Error::XVallueNotOfType("i64")),
+            _ => Err(Error::XValueNotOfType("i64")),
         }
     }
 }
@@ -38,7 +38,7 @@ impl TryFrom<W<Value>> for bool {
         match val.0 {
             Value::False => Ok(false),
             Value::True => Ok(true),
-            _ => Err(Error::XVallueNotOfType("i64")),
+            _ => Err(Error::XValueNotOfType("i64")),
         }
     }
 }
@@ -49,7 +49,7 @@ impl TryFrom<W<Value>> for String {
         match val.0 {
             Value::Strand(strand) => Ok(strand.as_string()),
             Value::Thing(thing) => Ok(thing.as_string()),
-            _ => Err(Error::XVallueNotOfType("String")),
+            _ => Err(Error::XValueNotOfType("String")),
         }
     }
 }
