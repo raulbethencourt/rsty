@@ -26,7 +26,7 @@ impl TryFrom<W<Value>> for i64 {
     type Error = Error;
     fn try_from(val: W<Value>) -> Result<i64, Error> {
         match val.0 {
-            Value::Number(obj) => Ok(obj),
+            Value::Number(obj) => Ok(obj.as_int()),
             _ => Err(Error::XValueNotOfType("i64")),
         }
     }
@@ -38,7 +38,7 @@ impl TryFrom<W<Value>> for bool {
         match val.0 {
             Value::False => Ok(false),
             Value::True => Ok(true),
-            _ => Err(Error::XValueNotOfType("i64")),
+            _ => Err(Error::XValueNotOfType("bool")),
         }
     }
 }
@@ -48,7 +48,7 @@ impl TryFrom<W<Value>> for String {
     fn try_from(val: W<Value>) -> Result<String, Error> {
         match val.0 {
             Value::Strand(strand) => Ok(strand.as_string()),
-            Value::Thing(thing) => Ok(thing.as_string()),
+            Value::Thing(thing) => Ok(thing.to_string()),
             _ => Err(Error::XValueNotOfType("String")),
         }
     }
