@@ -20,7 +20,7 @@ pub struct Task {
 }
 
 impl From<Task> for Value {
-    fn From(val: Task) -> Self {
+    fn from(val: Task) -> Self {
         match val.id {
             Some(v) => map![
                     "id".into() => v.into(),
@@ -77,9 +77,9 @@ impl DB {
         W(first_res.result?.first()).try_into()
     }
 
-    pub async fn get_task(&self, id: String) -> Rsult<Object, crate::error::Error> {
+    pub async fn get_task(&self, id: String) -> Result<Object, crate::error::Error> {
         let sql = "SELECT * FROM $th";
-        let tid = format!("{}", id);
+        let tid = id.to_string();
         let vars: BTreeMap<String, Value> = map!["th".into() => thing(&tid)?.into()];
         let ress = self.execute(sql, Some(vars)).await?;
 
@@ -102,7 +102,7 @@ impl DB {
 
     pub async fn toggle_task(&self, id: String) -> Result<AffectedRows, crate::error::Error> {
         let sql = "UPDATE $th SET completed = function() { return !this.completed; }";
-        let tid = format!("{}", id);
+        let tid = id.to_string();
         let vars: BTreeMap<String, Value> = map!["th".into() => thing(&tid)?.into()];
         let _ = self.execute(sql, Some(vars)).await?;
 
@@ -111,7 +111,7 @@ impl DB {
 
     pub async fn delete_task(&self, id: String) -> Result<AffectedRows, crate::error::Error> {
         let sql = "Delete $th";
-        let tid = format!("{}", id);
+        let tid = id.to_string();
         let vars: BTreeMap<String, Value> = map!["th".into() => thing(&tid)?.into()];
         let _ = self.execute(sql, Some(vars)).await?;
 

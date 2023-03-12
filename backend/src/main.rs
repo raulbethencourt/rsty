@@ -78,6 +78,6 @@ async fn rocket() -> _ {
             "/",
             routes![add_task, get_task, get_all_tasks, toggle_task, delete_task],
         )
-        .attach(CORS)
+        .attach(Cors)
         .manage(db)
 }

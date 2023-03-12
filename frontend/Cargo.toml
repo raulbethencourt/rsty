@@ -1,0 +1,11 @@
+[package]
+name = "todo_web"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wasm-bindgen-futures = "0.4"
+web-sys = "0.3"
+yew = "0.20.0"
