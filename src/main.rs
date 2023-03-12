@@ -14,6 +14,7 @@ mod db;
 mod error;
 mod prelude;
 mod utils;
+mod cors;
 
 #[post("/task/<title>")]
 async fn add_task(title: String, db: &State<DB>) -> Result<Json<Object>, std::io::Error> {
