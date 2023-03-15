@@ -20,3 +20,33 @@ impl Default for TaskState {
         Self { tasks: vec![] }
     }
 }
+
+impl Reducible for TaskState {
+    type Action = TaskAction;
+
+    fn reduce(self: Rc<Self>, action: Self::Action) -> Rc<Self> {
+        let next_tasks = match action {
+            TaskAction::Set(tasks) => tasks,
+            TaskAction::Add(task) => {
+                let mut tasks = self.tasks.clone();
+                tasks.push(task);
+                tasks
+            }
+            TaskAction::Delete(id) => {
+                let mut tasks = self.tasks.clone();
+                tasks.retain(|task| task.id != id);
+                tasks
+            }
+            TaskAction::Toggle(id) => {
+                let mut tasks = self.tasks.clone();
+                let task = tasks.iter_mut().find(|task| task.id == id);
+                if let Some(task) = task {
+                    task.completed = !task.completed;
+                }
+                tasks
+            }
+        };
+
+        Self { tasks: next_tasks }.into()
+    }
+}
