@@ -1,5 +1,5 @@
 use chrono::{DateTime, Utc};
-use serde::Deserialise;
+use serde::Deserialize;
 
 #[derive(Clone, PartialEq, Deserialize)]
 pub struct Task {
