@@ -691,7 +691,7 @@ function initSync(module) {
 
 async function init(input) {
     if (typeof input === 'undefined') {
-        input = new URL('todo_web-47d4d7f77e2962f5_bg.wasm', import.meta.url);
+        input = new URL('todo_web-98f59348e33bc132_bg.wasm', import.meta.url);
     }
     const imports = getImports();
 

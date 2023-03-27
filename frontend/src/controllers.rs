@@ -1,6 +1,6 @@
 use crate::{
     state::{TaskAction, TaskState},
-    todo_api,
+    backend,
 };
 use yew::UseReducerHandle;
 
@@ -16,7 +16,7 @@ impl TaskController {
     pub fn init_tasks(&self) {
         let tasks = self.state.clone();
         wasm_bindgen_futures::spawn_local(async move {
-            let fetched_tasks = todo_api::fetch_tasks().await.unwrap();
+            let fetched_tasks = backend::fetch_tasks().await.unwrap();
             tasks.dispatch(TaskAction::Set(fetched_tasks))
         });
     }
@@ -24,7 +24,7 @@ impl TaskController {
     pub fn create_task(&self, title: String) {
         let tasks = self.state.clone();
         wasm_bindgen_futures::spawn_local(async move {
-            let response = todo_api::create_task(&title).await.unwrap();
+            let response = backend::create_task(&title).await.unwrap();
             tasks.dispatch(TaskAction::Add(response));
         });
     }
@@ -32,7 +32,7 @@ impl TaskController {
     pub fn toggle_task(&self, id: String) {
         let tasks = self.state.clone();
         wasm_bindgen_futures::spawn_local(async move {
-            let response = todo_api::toggle_task(id.clone()).await.unwrap();
+            let response = backend::toggle_task(id.clone()).await.unwrap();
             if response.rows_affected == 1 {
                 tasks.dispatch(TaskAction::Toggle(id.clone()));
             }
@@ -42,7 +42,7 @@ impl TaskController {
     pub fn delete_task(&self, id: String) {
         let tasks = self.state.clone();
         wasm_bindgen_futures::spawn_local(async move {
-            let response = todo_api::delete_task(id.clone()).await.unwrap();
+            let response = backend::delete_task(id.clone()).await.unwrap();
             if response.rows_affected == 1 {
                 tasks.dispatch(TaskAction::Delete(id.clone()));
             }

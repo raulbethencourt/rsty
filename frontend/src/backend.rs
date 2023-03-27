@@ -1,4 +1,4 @@
-use create::models::*;
+use crate::models::*;
 use reqwasm::{http::Request, Error};
 
 const BASE_URL: &str = "http://127.0.0.1:8080";
